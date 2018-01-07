@@ -40,3 +40,4 @@ Properties/
 obj/
 bin/
 .vs/
+*.user
