@@ -23,18 +23,18 @@ namespace evbotapp.Controllers
                 return json.challenge;
             }
 
-            if(null != json.@event && !string.IsNullOrWhiteSpace(json.@event.text.Trim()))
+            if(null != json.message && !string.IsNullOrWhiteSpace(json.message.text.Trim()))
             {
-                var text = json.@event.text.Trim().ToLowerInvariant();
+                var text = json.message.text.Trim().ToLowerInvariant();
                 foreach (var command in Configuration.Instance.Commands) {
-                    if (null != json.@event.user && (text.Contains(command) || intent(text).Contains(command)))
+                    if (null != json.message.user && (text.Contains(command) || intent(text).Contains(command)))
                     {
                         var ucmd = new UserCommand
                         {
-                            user = json.@event.user,
+                            user = json.message.user,
                             command = command,
-                            context = json.@event.text.Trim(),
-                            channel = json.@event.channel,
+                            context = json.message.text.Trim(),
+                            channel = json.message.channel,
                             event_id = json.event_id,
                             event_time = json.event_time
                         };
