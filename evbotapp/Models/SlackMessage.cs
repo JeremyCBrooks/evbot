@@ -1,7 +1,7 @@
 ﻿
 namespace evbotapp.Models
 {
-    public class Message
+    public class SlackMessage
     {
         public string type { get; set; }
         public string channel { get; set; }
