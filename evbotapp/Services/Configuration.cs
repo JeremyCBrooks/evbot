@@ -35,13 +35,13 @@ namespace evbotapp.Services
             config = builder.Build();
 
             //appsettings
-            Commands = Get<string[]>("Commands");
+            Commands = GetArray("Commands");
             CommandFile = Get("CommandFile");
             SlackBaseUrl = Get("Slack:BaseUrl");
             ChargePointBaseUrl = Get("ChargePoint:BaseUrl");
-            ChargePointDeviceIds = Get<string[]>("ChargePoint:DeviceIds");
-            Greets = Get<string[]>("Greetings");
-            Color = Get<string[]>("Color");
+            ChargePointDeviceIds = GetArray("ChargePoint:DeviceIds");
+            Greets = GetArray("Greetings");
+            Color = GetArray("Color");
 
             //secrets
             ChallengeToken = Get("Slack:ChallengeToken");
@@ -78,19 +78,9 @@ namespace evbotapp.Services
             return ret;
         }
 
-        public T Get<T>(string key)
+        public string[] GetArray(string key)
         {
-            T ret;
-            if (typeof(T) is IEnumerable || typeof(T).IsArray)
-            {
-                var value = $"[{string.Join(",", config.GetSection(key).GetChildren().Select(c => $"\"{c.Value}\""))}]";
-                ret = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value);
-            }
-            else
-            {
-                ret = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(Get(key));
-            }
-
+            var ret = Get(key).Split(";");
             return ret;
         }
     }
